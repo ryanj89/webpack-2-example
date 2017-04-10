@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-8">
+
+    <form name="postForm" ng-submit="$ctrl.submit()" novalidate>
+
+      <!-- Title -->
+      <div class="form-group" ng-class="{
+          'has-error': $ctrl.newPostForm.title.$touched && $ctrl.newPostForm.title.$invalid,
+          'has-success': $ctrl.newPostForm.title.$valid
+        }">
+        <label for="title">Title</label>
+        <input id="title" name="title" class="form-control" ng-model="$ctrl.post.title" required>
+      </div>
+
+      <!-- Body -->
+      <div class="form-group" ng-class="{
+          'has-error': $ctrl.newPostForm.body.$touched && $ctrl.newPostForm.body.$invalid,
+          'has-success': $ctrl.newPostForm.body.$valid
+        }">
+        <label for="body">Body</label>
+        <textarea id="body" name="body" class="form-control" ng-model="$ctrl.post.body" required>
+          </textarea>
+      </div>
+
+      <!-- Author -->
+      <div class="form-group" ng-class="{
+          'has-error': $ctrl.newPostForm.author.$touched && $ctrl.newPostForm.author.$invalid,
+          'has-success': $ctrl.newPostForm.author.$valid
+        }">
+        <label for="author">Author</label>
+        <input id="author" name="author" class="form-control" ng-model="$ctrl.post.author" required>
+      </div>
+
+      <!-- Image URL -->
+      <div class="form-group" ng-class="{
+          'has-error': $ctrl.newPostForm.image_url.$touched && $ctrl.newPostForm.image_url.$invalid,
+          'has-success': $ctrl.newPostForm.image_url.$valid
+        }">
+        <label for="image-url">Image URL</label>
+        <input id="image-url" name="image_url" class="form-control" ng-model="$ctrl.post.image_url" required>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" ng-disabled="postForm.$invalid" class="btn btn-primary">
+            {{$ctrl.button}}
+          </button>
+      </div>
+    </form>
+
+  </div>
+</div>

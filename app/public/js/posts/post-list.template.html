@@ -1,0 +1,73 @@
+<div class="pull-right">
+  <p><a class="btn btn-info" ng-click="$ctrl.togglePostForm()">New Post</a></p>
+</div>
+
+<ul class="nav nav-pills">
+  <li role="presentation" class="active">
+    <div class="form-group">
+      <input type="search" class="form-control search-form" placeholder="Filter" ng-model="search">
+    </div>
+  </li>
+  <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        Sort By {{$ctrl.sortName}}<span class="caret"></span>
+      </a>
+    <ul class="dropdown-menu">
+      <li><a ng-click="$ctrl.sortType='-vote_count'; $ctrl.sortName='Votes'">Votes</a></li>
+      <li><a ng-click="$ctrl.sortType='-created_at'; $ctrl.sortName='Date'">Date</a></li>
+      <li><a ng-click="$ctrl.sortType='title'; $ctrl.sortName='Title'">Title</a></li>
+    </ul>
+  </li>
+</ul>
+
+<post-form ng-if="$ctrl.addPost" on-submit="$ctrl.createPost(post)" post="$ctrl.post" button="Create Post"></post-form>
+
+<div class="row">
+  <div class="col-md-12">
+
+    <div class="well" ng-repeat="post in $ctrl.posts | filter:search | orderBy:$ctrl.sortType">
+      <div class="media-left">
+        <img class="media-object" ng-src="{{post.image_url}}">
+        <a ui-sref="edit-post(post)">edit</a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          {{post.title}} |
+          <a ng-click="$ctrl.voteUp(post)"><i class="glyphicon glyphicon-arrow-up"></i></a>
+          <a ng-click="$ctrl.voteDown(post)"><i class="glyphicon glyphicon-arrow-down"></i></a> {{post.vote_count}}
+        </h4>
+        <div class="text-right">
+          {{post.author}}
+        </div>
+        <p>
+          {{post.body}}
+        </p>
+        <div>
+          <span am-time-ago="post.created_at"></span> |
+          <i class="glyphicon glyphicon-comment"></i>
+          <a ng-click="vm.comments=!vm.comments">
+            <ng-pluralize count="post.comments.length" when="{'0': '0 Comments', 'one': '1 Comment', 'other': '{} Comments' }">
+            </ng-pluralize>
+          </a>
+        </div>
+        <div class="row">
+          <div class="col-md-offset-1" ng-if="vm.comments">
+            <hr>
+            <p ng-repeat="comment in post.comments">
+              {{comment.content}}
+            </p>
+            <form name="$ctrl.newCommentForm" ng-submit="$ctrl.createComment(post)" class="form-inline">
+              <div class="form-group">
+                <input class="form-control" ng-model="post.newComment.content">
+              </div>
+              <div class="form-group">
+                <input type="submit" class="btn btn-primary">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
